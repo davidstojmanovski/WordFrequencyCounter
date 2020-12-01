@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Word Frequency Calculator";
+    var dict = (IDictionary<string, int>)ViewData["dict"];
+}
+
+<h2>Calculate</h2>
+
+
+@using (Html.BeginForm("Calculate",
+                        "Home",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Upload file:</label>
+    <input type="file" name="file" id="file" />
+    <br>
+    <br>
+
+    <input type="submit" value="Upload File" />
+
+    <br>
+    <br>
+
+    @ViewBag.Message
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Word
+        </th>
+        <th>
+            Word Count
+        </th>
+
+    </tr>
+    @foreach (var item in dict)
+    {
+    <tr>
+         <td>
+             @item.Key
+         </td>
+          <td>
+             @item.Value
+         </td>
+</tr>
+
+            }
+
+
+    </table>

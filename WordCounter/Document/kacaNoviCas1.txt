@@ -1,0 +1,95 @@
+NIZ
+
+Deklaracija niza
+int n[5];
+
+char n[5];
+
+
+Dodeljivanje vrednosti elementu niza
+n[2]=100;
+
+citanje vrednosti elementa niza
+printf("%d",n[2]);
+
+//svi algoritmi za sortiranje nizova
+https://www.geeksforgeeks.org/sorting-algorithms/#Basic 
+//nauciti da se sortira niz na dva nacina
+
+
+///////////////////////////////////////////////////////////////////////////////////
+//Osnovni kod
+
+
+#include <stdio.h>
+
+int main()
+{
+    int n[100];
+    int br;
+    scanf("%d",&br);
+    //dodeljivanje vrednosti elementima niza
+    for(int i=0; i<br; i++){
+        scanf("%d",&n[i]);
+    }
+    //dohvatanje vrednosti elemenata niza
+    for(int i=0; i<br; i++){
+        printf("%d ",n[i]);
+    }
+    
+    //dohvatanje vrednosti elemenata (unazad)
+    printf("\n");
+    for(int a=br-1; a>=0; a--){
+        printf("%d",n[a]);
+    }
+    
+    
+
+    return 0;
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+
+//Kod za https://petlja.org/biblioteka/r/problemi/uvod-u-programiranje/04_najcesce_ponavljanje
+
+#include <stdio.h>
+
+int main()
+{
+    int niz1[100];
+    int niz2[1000];
+   int n=10;
+    int i;  
+   for(i=0; i<n; i++){
+       scanf("%d",&niz1[i]);
+   }
+    for(i=0; i<1000; i++){
+        niz2[i]=0;
+    }
+    for(i=0; i<n; i++){
+        int a=niz1[i];
+        niz2[a]++;
+    }
+    int max=0;
+    int max_index=0;
+    
+    for(i=0; i<1000; i++){
+        if(niz2[i]>max){
+            max=niz2[i];
+            max_index=i;
+        }
+    }
+    
+    printf("Broj %d se najvise ponavlja,i to %d puta",max_index,max);
+
+
+
+    return 0;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
