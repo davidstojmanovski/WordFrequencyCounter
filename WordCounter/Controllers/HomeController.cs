@@ -65,6 +65,7 @@ namespace WordCounter.Controllers
             catch (Exception)
             {
                 result = false;
+                System.Diagnostics.Debug.WriteLine("Usao si u eror ovde to je to");
             }
 
             String s1 = strbuild.ToString();
@@ -90,26 +91,28 @@ namespace WordCounter.Controllers
 
             dict=dict.OrderBy(key => key.Value).ToDictionary(key=>key.Key, key=>key.Value);
 
-            ArrayList words = new ArrayList();
-            var sol = new List<WordModel>();
-
+            List<WordModel> words = new List<WordModel>();
+            
+            
 
             for (int i=0; i<dict.Count(); i++)
             {
-                System.Diagnostics.Debug.WriteLine("Rec: {0}, Broj Ponavljanja: {1}", dict.ElementAt(i).Key, dict.ElementAt(i).Value);
+                //System.Diagnostics.Debug.WriteLine("Rec: {0}, Broj Ponavljanja: {1}", dict.ElementAt(i).Key, dict.ElementAt(i).Value);
                 WordModel word = new WordModel(dict.ElementAt(i).Key,dict.ElementAt(i).Value);
                 words.Add(word);
-                sol.Add(word);
+                
+              
 
             }
             words.Sort();
             words.Reverse();
-            var wordsArray = words.ToArray();
             
-         
             
-            ViewData["dict"] = wordsArray;
-            return View(sol);
+
+            
+            
+            //ViewData["dict"] = wordsArray;
+            return View(words.AsEnumerable());
         }
 
 

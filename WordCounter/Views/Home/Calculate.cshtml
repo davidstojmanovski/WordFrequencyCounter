@@ -1,10 +1,11 @@
 ﻿@using WordCounter.Models;
-@using GridMvc.Html;
 
 
-@model List<WordCounter.Models.WordModel>
+
+@model IEnumerable<WordCounter.Models.WordModel>
 @{
     ViewBag.Title = "Word Frequency Calculator";
+    
     //Layout = null;
     //var dict = (IDictionary<string, int>)ViewData["dict"];
     // dict = dict.OrderByDescending(key => key.Value).ToDictionary(key => key.Key, key => key.Value);
@@ -43,36 +44,56 @@
 
 
 
+<table class="table" id="datatable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.word)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.wordCount)
+            </th>
 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
 
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.word)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.wordCount)
+                </td>
+            </tr>
 
+        }
+    </tbody>
 
-<div class="row">
-    <div class="col-md-12">
-        @Html.Grid(Model).Named("WordGrid").Columns(c =>
-   {
+</table>
 
-       c.Add(x => x.word).Titled("Word").Filterable(true).Sortable(false);
-       c.Add(x => x.wordCount).Titled("Word Count").Filterable(true).Sortable(true);
-
-
-   }).WithPaging(10).EmptyText("No words found")
-    </div>
-
-
-</div>
-
-
-
-
-
-
-@section styles{
-    @Styles.Render("~/Content/Gridmvc")
-}
 @section scripts{
-    @Scripts.Render("~/bundles/Gridmvc")
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/af-2.3.5/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/af-2.3.5/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+                 " processing": true,
+                 " serverSide": true,
+                "pageLength": 10
+                //pokusaj popravke problema sa velikim podacima...
+            }  );
+        })
+    </script>
+
+
 }
+
+
+
 
 
 
