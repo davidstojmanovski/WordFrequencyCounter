@@ -44,14 +44,14 @@
 
 
 
-<table class="table" id="datatable">
+<table class="table" style="table-layout:fixed"id="datatable">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.word)
+                Word
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.wordCount)
+                Word Count
             </th>
 
         </tr>
@@ -83,7 +83,9 @@
             $("#datatable").DataTable({
                  " processing": true,
                  " serverSide": true,
-                "pageLength": 10
+                "pageLength": 10,
+                "AutoWidth": false,
+                "LengthChange": false,
                 //pokusaj popravke problema sa velikim podacima...
             }  );
         })

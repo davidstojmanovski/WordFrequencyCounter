@@ -62,10 +62,9 @@ namespace WordCounter.Controllers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                result = false;
-                System.Diagnostics.Debug.WriteLine("Usao si u eror ovde to je to");
+                System.Diagnostics.Debug.WriteLine(e.StackTrace);
             }
 
             String s1 = strbuild.ToString();
@@ -106,10 +105,12 @@ namespace WordCounter.Controllers
             }
             words.Sort();
             words.Reverse();
-            
-            
 
-            
+
+
+            Response.Buffer = false;
+            Response.BufferOutput = false;
+            Response.Flush();
             
             //ViewData["dict"] = wordsArray;
             return View(words.AsEnumerable());
