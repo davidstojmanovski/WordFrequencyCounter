@@ -7,6 +7,7 @@ using System.Text;
 using System.IO;
 using System.Collections;
 using System.Runtime.InteropServices;
+using WordCounter.Models;
 
 namespace WordCounter.Controllers
 {
@@ -19,6 +20,18 @@ namespace WordCounter.Controllers
             return View();
         }
         
+
+
+    public ActionResult SortedCalculate(Array dic,int br)
+        {
+
+            
+
+            ViewData["dict"] = dic;
+
+            return View();
+
+        }
 
         [HttpPost]
         public ActionResult Calculate(HttpPostedFileBase file)
@@ -57,6 +70,7 @@ namespace WordCounter.Controllers
             String s1 = strbuild.ToString();
             ArrayList list = new ArrayList(s1.Split(' ', ',', ':', ';', '!', '?', '.', '"', '(', ')', ']', '[', '}', '{', '\''));
             IDictionary<string, int> dict = new Dictionary<string, int>();
+            
            foreach(String l in list)
             {
                 if (l.Length > 1)
@@ -73,15 +87,29 @@ namespace WordCounter.Controllers
                 }
             }
             if (dict.ContainsKey("")) dict.Remove("");
-            for(int i=0; i<dict.Count(); i++)
+
+            dict=dict.OrderBy(key => key.Value).ToDictionary(key=>key.Key, key=>key.Value);
+
+            ArrayList words = new ArrayList();
+            var sol = new List<WordModel>();
+
+
+            for (int i=0; i<dict.Count(); i++)
             {
                 System.Diagnostics.Debug.WriteLine("Rec: {0}, Broj Ponavljanja: {1}", dict.ElementAt(i).Key, dict.ElementAt(i).Value);
-            }
-            System.Diagnostics.Debug.WriteLine(strbuild.ToString());
+                WordModel word = new WordModel(dict.ElementAt(i).Key,dict.ElementAt(i).Value);
+                words.Add(word);
+                sol.Add(word);
 
+            }
+            words.Sort();
+            words.Reverse();
+            var wordsArray = words.ToArray();
             
-            ViewData["dict"] = dict;
-            return View();
+         
+            
+            ViewData["dict"] = wordsArray;
+            return View(sol);
         }
 
 

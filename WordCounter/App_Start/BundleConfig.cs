@@ -25,6 +25,19 @@ namespace WordCounter
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //script for grid
+            bundles.Add(new ScriptBundle("~/bundles/Gridmvc").Include(
+                "~/Scripts/gridmvc*"));
+
+            bundles.Add(new StyleBundle("~/Content/Gridmvc").Include(
+                            "~/Content/Gridmvc.css"));
+
+
+
+
+
+
         }
     }
 }
