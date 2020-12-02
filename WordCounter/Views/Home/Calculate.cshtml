@@ -1,8 +1,11 @@
 ﻿@using WordCounter.Models;
-@using GridMvc.Html
+@using GridMvc.Html;
+
+
 @model List<WordCounter.Models.WordModel>
 @{
     ViewBag.Title = "Word Frequency Calculator";
+    //Layout = null;
     //var dict = (IDictionary<string, int>)ViewData["dict"];
     // dict = dict.OrderByDescending(key => key.Value).ToDictionary(key => key.Key, key => key.Value);
 }
@@ -39,35 +42,8 @@
 }
 
 
-<a class="btn btn-cuccess" href="@Url.Action("SortedCalculate","Home", new {param1= ViewBag.dict, param2=1 } )"> Sort</a>
 
 
-
-<table class="table">
-    <tr>
-        <th>
-            Word
-        </th>
-        <th>
-            Word Count
-        </th>
-
-    </tr>
-    @foreach (WordModel item in ViewBag.dict)
-    {
-        <tr>
-            <td>
-                @item.word
-            </td>
-            <td>
-                @item.wordCount
-            </td>
-        </tr>
-
-    }
-
-
-</table>
 
 
 
