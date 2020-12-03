@@ -8,6 +8,8 @@ using System.IO;
 using System.Collections;
 using System.Runtime.InteropServices;
 using WordCounter.Models;
+using System.Data;
+using Newtonsoft.Json;
 
 namespace WordCounter.Controllers
 {
@@ -56,7 +58,12 @@ namespace WordCounter.Controllers
                         {
                             while (sr.Peek() >= 0)
                             {
-                                strbuild.AppendFormat(sr.ReadLine());
+
+                                if (sr.ReadLine().Count() < strbuild.MaxCapacity)
+                                {
+                                    strbuild.AppendFormat(sr.ReadLine());
+                                }
+                                else throw new Exception("Word exceedes word length limit");
                             }
                         }
                     }
@@ -64,9 +71,14 @@ namespace WordCounter.Controllers
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                result = false;
+                throw new Exception(e.StackTrace);
+                
             }
-
+            if (!result)
+            {
+                strbuild.Clear();
+            }
             String s1 = strbuild.ToString();
             ArrayList list = new ArrayList(s1.Split(' ', ',', ':', ';', '!', '?', '.', '"', '(', ')', ']', '[', '}', '{', '\''));
             IDictionary<string, int> dict = new Dictionary<string, int>();
@@ -93,27 +105,28 @@ namespace WordCounter.Controllers
             List<WordModel> words = new List<WordModel>();
             
             
-
+           
+            
             for (int i=0; i<dict.Count(); i++)
             {
                 //System.Diagnostics.Debug.WriteLine("Rec: {0}, Broj Ponavljanja: {1}", dict.ElementAt(i).Key, dict.ElementAt(i).Value);
                 WordModel word = new WordModel(dict.ElementAt(i).Key,dict.ElementAt(i).Value);
                 words.Add(word);
-                
-              
-
+           
             }
             words.Sort();
             words.Reverse();
-
-
-
-            Response.Buffer = false;
-            Response.BufferOutput = false;
-            Response.Flush();
             
-            //ViewData["dict"] = wordsArray;
-            return View(words.AsEnumerable());
+          
+            System.Diagnostics.Debug.WriteLine(words.Count);
+           
+
+           
+
+                    
+                return View(words);
+            
+
         }
 
 

@@ -1,14 +1,11 @@
 ﻿@using WordCounter.Models;
+@using System.Data;
 
 
-
-@model IEnumerable<WordCounter.Models.WordModel>
+@model List<WordModel>
 @{
     ViewBag.Title = "Word Frequency Calculator";
     
-    //Layout = null;
-    //var dict = (IDictionary<string, int>)ViewData["dict"];
-    // dict = dict.OrderByDescending(key => key.Value).ToDictionary(key => key.Key, key => key.Value);
 }
 
 
@@ -44,51 +41,27 @@
 
 
 
-<table class="table" style="table-layout:fixed"id="datatable">
-    <thead>
-        <tr>
-            <th>
-                Word
-            </th>
-            <th>
-                Word Count
-            </th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.word)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.wordCount)
-                </td>
-            </tr>
-
-        }
-    </tbody>
-
-</table>
+<table class="table" display="hidden" id="datatable">  </table>
 
 @section scripts{
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/af-2.3.5/datatables.min.css" />
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/af-2.3.5/datatables.min.js"></script>
     <script>
+            
+                           var m=@Html.Raw(Json.Encode(Model));
+
         $(document).ready(function () {
             $("#datatable").DataTable({
-                 " processing": true,
-                 " serverSide": true,
-                "pageLength": 10,
-                "AutoWidth": false,
-                "LengthChange": false,
-                //pokusaj popravke problema sa velikim podacima...
-            }  );
-        })
+                data: m,
+                "columns": [
+                    { "data": 'word' },
+                    { "data": 'wordCount' }
+                ]
+
+
+            });
+        });
     </script>
 
 
